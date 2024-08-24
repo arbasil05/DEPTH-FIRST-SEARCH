@@ -1,8 +1,8 @@
 from collections import deque
 from collections import defaultdict
 
-
 '''
+Input example:
 V E
 FOR EVERY EDGE
 U V
@@ -17,23 +17,43 @@ D E
 D G
 G F
 '''
-def bfs(graph,start,visited,path):
+
+def bfs(graph, start, visited, path):
     queue = deque()
-    path.append(start)
-    queue.append(start)
-    visited[start] = True
+    path.append(start) 
+    queue.append(start)  
+    visited[start] = True  
+    
     while len(queue) != 0:
-        tmpnode = queue.popleft()
-        #TYPE UR CODE HERE
+        tmpnode = queue.popleft()  
+        
+    
+        for neighbour in graph[tmpnode]:
+            if not visited[neighbour]: 
+                queue.append(neighbour)  
+                visited[neighbour] = True  
+                path.append(neighbour) 
+    
     return path
 
-graph = defaultdict(list)
-v,e = map(int,input().split())
-for i in range(e):
-    #TYOE UR CODE HERE
 
-start = '0'
+graph = defaultdict(list)
+
+v, e = map(int, input().split())
+
+
+for i in range(e):
+    u, v = input().split() 
+    graph[u].append(v) 
+    graph[v].append(u)  
+
+
+start = 'A'
+
 path = []
 visited = defaultdict(bool)
-traversedpath = bfs(graph,start,visited,path)
-print(traversedpath)
+
+traversed_path = bfs(graph, start, visited, path)
+
+
+print(traversed_path)
